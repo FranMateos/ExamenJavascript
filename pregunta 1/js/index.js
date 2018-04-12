@@ -1,52 +1,62 @@
 (function () {
-    var ac = document.getElementsByTagName('form');
+    var ac = document.getElementsByTagName('input');
     for(var i=0;i<ac.length;i++){
-        ac[i].addEventListener('submit', validar, true);
+        // ac[i].lastChild.addEventListener('click', validar, false);
         ac[i].addEventListener('change', validar, false);
     }
-    // document.addEventListener('click', validar, false);
-    // document.addEventListener('change', val, false);
-    // validatePasswd(document.getElementById('password'));
+    var but = document.getElementsByTagName('button');
+    for(var j=0;j<but.length;j++){
+        but[j].addEventListener('submit', validar, false);
+    }
 })();
 
 function validar(event) {
     var field = event.target;
     if(field.textContent == "Connect"){
-        var email = field.getElementById('email_login').value.toString();
-        var pass = field.getElementById('password_login').value.toString();
+        var email = document.getElementById('email_login').value.toString();
+        var pass = document.getElementById('password_login').value.toString();
         var usuario = new Usuario(null, null, email, pass);
         login(usuario);
     }else{
-    var bol = validatePasswd(field.getElementById('password').value.toString());
+    var bol = validatePasswd(document.getElementById('password').value.toString());
+    bol = validatePasswd(document.getElementById('password-confirm').value.toString());
     console.log("bol vale: " + bol);
     if(bol){
-    if (field.getElementById('email-confirm') != field.getElementById('email')) {
+        document.getElementById('password').setCustomValidity("");
+        document.getElementById('password-confirm').setCustomValidity("");
+        document.getElementById('email').setCustomValidity("");
+        document.getElementById('email-confirm').setCustomValidity("");
+    if (document.getElementById('email-confirm').value.toString() != document.getElementById('email').value.toString()) {
         bol = false;
-        // field.getElementById('email-confirm').validity.patternMismatch = true;
-        // field.getElementById('email').validity.patternMismatch = true;
-        // field.getElementById('email').focus();
-        field.getElementById('email').setCustomvalidity("Los emails no coinciden");
+        document.getElementById('email').setCustomValidity("Los emails no coinciden");
+        document.getElementById('email-confirm').setCustomValidity("Los emails no coinciden");
+        document.getElementById('email').focus();
         event.preventDefault();
     } else
-    if (field.getElementById('password-confirm').value.toString() != event.target.getElementById('password').value.toString()) {
+    if (document.getElementById('password-confirm').value.toString() != document.getElementById('password').value.toString()) {
         bol = false;
-        // field.getElementById('password-confirm').validity.patternMismatch = true;
-        // event.target.getElementById('password').validity.patternMismatch = true;
-        // event.target.getElementById('password').focus();
-        field.getElementById('password').setCustomValidity("Los passwords no coinciden");
+        document.getElementById('password').setCustomValidity("Los passwords no coinciden");
+        document.getElementById('password').focus();
         event.preventDefault();
+    }else{
+        document.getElementById('password').setCustomValidity("");
+        document.getElementById('password-confirm').setCustomValidity("");
+        document.getElementById('email').setCustomValidity("");
+        document.getElementById('email-confirm').setCustomValidity("");
+        bol = true;
     }
     if (bol) {
-        var nombre = field.getElementById('first_name').value.toString();
-        var apellido = field.getElementById('last_name').value.toString();
-        var email = field.getElementById('email').value.toString();
-        var contrasenia = field.getElementById('password').value.toString();
+        var nombre = document.getElementById('first_name').value.toString();
+        var apellido = document.getElementById('last_name').value.toString();
+        var email = document.getElementById('email').value.toString();
+        var contrasenia = document.getElementById('password').value.toString();
         var usuario = new Usuario(nombre, apellido, email, contrasenia);
         registrar(usuario); 
-    }}}else{
-        field.getElementById('password').setCustomValidity("El password no tiene el formato esperado");
+    }}else{
+        document.getElementById('password').setCustomValidity("El password no tiene el formato esperado, debe contener al menos una letra mayúscula, otra minúscula, un número y un símbolo");
+        document.getElementById('password-confirm').setCustomValidity("El password no tiene el formato esperado, debe contener al menos una letra mayúscula, otra minúscula, un número y un símbolo");
         event.preventDefault();
-    }
+    }}
     return bol;
 }
 
@@ -77,17 +87,9 @@ function login(usuario){
 /*función que devuelve true si la contraseña es válida 
  y false en caso contrario*/
 function validatePasswd(passwd) {
-    return (/[a-zñ]/g.test(passwd) && /[A-ZÑ]/g.test(passwd) && /[0-9]/g.test(passwd) && /\W/g.test(passwd));
-}
-
-function val(event) {
-    if (event.target.id == 'password' || event.target.id == 'password-confirm') {
-        console.log('Entra en validacion');
-        if (document.getElementById('password-confirm') != document.getElementById('password')) {
-            document.getElementById('password-confirm').validity.valid = false;
-            document.getElementById('password-confirm').title = 'Las contraseñas han de coincidir';
-        } else {
-            document.getElementById('password-confirm').validity.valid = true;
-        }
-    }
+    var min = /[a-zñ]/g.test(passwd);
+    var may = /[A-ZÑ]/g.test(passwd);
+    var num = /[0-9]/g.test(passwd);
+    var sim = /\W/g.test(passwd);
+    return ( min && may && num && sim);
 }
