@@ -1,0 +1,19 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css\style.css">
+</head>
+<body>
+
+<div id="app">
+  <h1>Documento Valido: {{ result.valid }} / Tipo: {{ result.type }}</h1>
+  <input v-model="dni" :class="{'valid': result.valid}">
+</div>
+
+	<script src="js/vue.min.js"></script>
+	<script src="js/dni.js"></script>
+</body>
+
+</html>
+
+
+

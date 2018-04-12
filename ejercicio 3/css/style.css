@@ -1,0 +1,22 @@
+#app { padding: 30px }
+* {
+  box-sizing: border-box;
+  font-family: "Roboto", "Helvetica";
+  font-weight: 300;
+  font-size: 18px;
+}
+
+input {
+  color: red;
+  background-color: lightpink;
+  outline: none;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  font-size: 32px;
+  width: 250px;
+}
+
+input.valid {
+  color: green;
+  background-color: lightgreen;
+}

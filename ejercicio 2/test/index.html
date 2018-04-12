@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="refresh" content="5"> -->
+    <title>Mocha</title>
+    <link href="css/mocha.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="js/chai.min.js" charset="utf-8"></script>
+    <script src="js/mocha.min.js"></script>
+    <script>mocha.setup('bdd');</script>
+    <script>mocha.setup('tdd');</script>
+    <script src="../js/sevenKingdoms.js"></script>
+    <script src="js/test.finalDestination.js"></script>
+    <script>
+      mocha.run();
+    </script>
+  </body>
+</html>
