@@ -65,7 +65,9 @@ function validar(event) {
 function registrar(usuario) {
     if(usuario instanceof Usuario){
     document.cookie = "nombre:"+usuario.nombre+";apellido:"+usuario.apellido+";email:"
-            +usuario.email+";contrasenia:"+usuario.contrasenia;}
+            +usuario.email+";contrasenia:"+usuario.contrasenia;
+    alert("Usuario registrado correctamente");
+}
 }
 
 /*función que devuelve true si el usuario y la contraseña del objeto usuario 
